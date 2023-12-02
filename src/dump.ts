@@ -78,7 +78,7 @@ export async function dump({
 
     const user = await leetcode.whoami();
 
-    if (user.isSignedIn === false) {
+    if (!user.isSignedIn) {
         spinner?.fail("No user found! Is your session expired?");
         process.exit(1);
     }
@@ -102,6 +102,10 @@ export async function dump({
         ];
         spinner?.start(`Dumping Submissions... (${i + 1}/${bests.size})`);
         const problem = await leetcode.problem(slug); // intentionally keep for notes
+        if (!user.isPremium && problem.isPaidOnly) {
+            console.log(`Skipping ${problem.title} because is premium only`);
+            continue;
+        }
         spinner &&
             (spinner.text += ` ${problem.questionFrontendId}. ${problem.title} [${[
                 ...submissions.keys(),
@@ -118,7 +122,9 @@ export async function dump({
                 .join(", ")}\n\n${turndown.turndown(problem.content)}`,
         );
 
-        fs.writeFileSync(path.resolve(folder, "NOTE.md"), problem.note || "");
+        if(problem.note != "") {
+            fs.writeFileSync(path.resolve(folder, "NOTE.md"), problem.note || "");
+        }
 
         const row: [string, string, string, string[]] = [
             `[${problem.questionFrontendId}. ${problem.title}](./${encodeURI(
@@ -222,42 +228,44 @@ async function get_bests({
     }
 
     const prev_last = cache[0]?.id || 0;
-    for (let i = 0; i < 1000; i++) {
-        const submissions = await rerun(
-            () => leetcode.submissions({ limit: 20, offset: i * 20 }),
+    let hasMoreData = true;
+    let offset = 0;
+    while (hasMoreData) {
+        const [submissions, currentHasMoreData] = await rerun(
+            () =>
+                leetcode.submissions({
+                    limit: 20,
+                    offset: offset,
+                    onlyAccepted: true,
+                }),
             retry,
         );
-
-        if (submissions.every((submission) => set.has(submission.id))) {
-            break;
-        }
+        offset += 20;
+        hasMoreData = currentHasMoreData;
 
         for (const submission of submissions) {
             if (!set.has(submission.id) && !skips.has(submission.id) && submission.id > prev_last) {
                 set.add(submission.id);
 
-                if (submission.statusDisplay === "Accepted") {
-                    if (bests.has(submission.titleSlug) === false) {
-                        bests.set(
-                            submission.titleSlug,
-                            new Map<string, Submission & { cached?: boolean }>(),
-                        );
-                    }
+                if (!bests.has(submission.titleSlug)) {
+                    bests.set(
+                        submission.titleSlug,
+                        new Map<string, Submission & { cached?: boolean }>(),
+                    );
+                }
 
-                    const best = bests.get(submission.titleSlug) as Map<
-                        string,
-                        Submission & { cached?: boolean }
-                    >;
-                    const prev = best.get(submission.lang);
+                const best = bests.get(submission.titleSlug) as Map<
+                    string,
+                    Submission & { cached?: boolean }
+                >;
+                const prev = best.get(submission.lang);
 
-                    if (
-                        prev === undefined ||
-                        submission.runtime < prev.runtime ||
-                        (submission.runtime === prev.runtime &&
-                            submission.timestamp > prev.timestamp)
-                    ) {
-                        best.set(submission.lang, submission);
-                    }
+                if (
+                    prev === undefined ||
+                    submission.runtime < prev.runtime ||
+                    (submission.runtime === prev.runtime && submission.timestamp > prev.timestamp)
+                ) {
+                    best.set(submission.lang, submission);
                 }
             }
         }

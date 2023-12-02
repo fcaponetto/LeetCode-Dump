@@ -41,7 +41,7 @@
         "dotenv": "16.0.0",
         "fs-extra": "^10.1.0",
         "is-docker": "^2.2.1",
-        "leetcode-query": "^0.2.1",
+        "leetcode-query": "github:fcaponetto/LeetCode-Query",
         "node-fetch": "2.6.7",
         "ora": "5.4.1",
         "turndown": "^7.1.1",

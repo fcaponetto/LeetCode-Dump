@@ -185,3 +185,7 @@ docker run --rm -v $(pwd):/lc jacoblincool/leetcode-dump build -s /lc/solutions 
 Open dev tool, go to `application` tab, then find the cookie `LEETCODE_SESSION`, it's a JWT.
 
 ![screenshot-session](./screenshots/screenshot-session.png)
+
+## Note
+If the Leetcode-Query gets updates, please remove `package-lock.json` and install again by `npm i`
+See [here](https://stackoverflow.com/a/64274176)
