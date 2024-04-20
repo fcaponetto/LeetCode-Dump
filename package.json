@@ -13,7 +13,8 @@
         "build": "npm run format && tsup",
         "docs": "typedoc ./src/",
         "format": "prettier --write '**/*.{js,ts,jsx,tsx,json,yml,yaml,html}' '!lib' '!docs' '!leetcode' '!site' '!site_tmp' '!demo.yml'",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "ts": "ts-node src/leetcode-dump.ts -h"
     },
     "keywords": [
         "leetcode",
