@@ -5,9 +5,10 @@
 
 You need Node.js 16+. Or [using Docker](https://github.com/JacobLinCool/LeetCode-Dump?tab=readme-ov-file#docker-usage).
 
-To install globally (-g option)
+To install globally:
 ```sh
-npm i -g leetcode-dump
+npm run build
+sudo npm link
 ```
 
 ## Usage
