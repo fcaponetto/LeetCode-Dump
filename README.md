@@ -81,3 +81,6 @@ Open dev tool, go to `application` tab, then find the cookie `LEETCODE_SESSION`,
 ## Note
 If the Leetcode-Query gets updates, please remove `package-lock.json` and install again by `npm i`
 See [here](https://stackoverflow.com/a/64274176)
+
+## How to run in WebStorm
+![image](https://github.com/fcaponetto/LeetCode-Dump/assets/11439681/89bac306-d642-4344-81df-76e9d040efbc)
