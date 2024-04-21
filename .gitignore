@@ -132,3 +132,7 @@ lib/
 leetcode/
 site_tmp/
 site/
+
+.idea
+
+package-lock.json
