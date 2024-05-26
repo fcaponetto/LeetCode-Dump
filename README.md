@@ -3,12 +3,13 @@
 
 ## Install
 
-You need Node.js 16+. Or [using Docker](https://github.com/JacobLinCool/LeetCode-Dump?tab=readme-ov-file#docker-usage).
+You need [Node.js 16+](https://nodejs.org/en/download/package-manager). Or [using Docker](https://github.com/JacobLinCool/LeetCode-Dump?tab=readme-ov-file#docker-usage).
 
 To install globally:
 ```sh
+npm install # to install dependencies
 npm run build
-sudo npm link
+npm link
 ```
 
 ## Usage
