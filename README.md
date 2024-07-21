@@ -75,9 +75,9 @@ leetcode-dump build
 
 ## How to Get My Session
 
-Open dev tool, go to `application` tab, then find the cookie `LEETCODE_SESSION`, it's a JWT.
+Open dev tool, go to `Network` tab, then find the cookie with `LEETCODE_SESSION`, it's a JWT.
 
-![screenshot-session](./screenshots/screenshot-session.png)
+![screenshot-session](https://github.com/user-attachments/assets/37f2505c-9db4-46b6-b26e-f6a922efcd4c)
 
 ## Note
 If the Leetcode-Query gets updates, please remove `package-lock.json` and install again by `npm i`
