@@ -9,7 +9,7 @@ To install globally:
 ```sh
 npm install # to install dependencies
 npm run build
-npm install -g leetcode-dump
+npm link
 ```
 
 NOTE: If you modify this package, check with `npm link` that there are no errors. Otherwhise, packages that depens on this, will not pull the latest version!
