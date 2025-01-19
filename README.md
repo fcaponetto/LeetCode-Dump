@@ -12,6 +12,8 @@ npm run build
 npm link
 ```
 
+NOTE: If you modify this package, check with `npm link` that there are no errors. Otherwhise, packages that depens on this, will not pull the latest version!
+
 ## Usage
 
 ### Dump Solutions
